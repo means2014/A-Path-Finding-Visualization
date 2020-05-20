@@ -1,11 +1,23 @@
 #Required Imports
-import math
-import os
-import pygame
-import sys
-from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
+try:
+    import pygame
+    import sys
+    import math
+    from tkinter import *
+    from tkinter import ttk
+    from tkinter import messagebox
+    import os
+except:
+    import install_requirements  # install packages
+
+    import pygame
+    import sys
+    import math
+    from tkinter import *
+    from tkinter import ttk
+    from tkinter import messagebox
+    import os
+
 
 #Constants
 SCREEN_HEIGHT = 800
