@@ -49,7 +49,7 @@ class Node:
         
         #physical location of the center of the hexagon
         self.x = w*(i+1/2)
-        self.y = h*(j+1/2+1/2*(j%2==0)) #even columns are shifted down by 1/2 unit
+        self.y = h*(j+1/2+1/2*(i%2==0)) #even columns are shifted down by 1/2 unit
         
         #Member variables for the A-star algorithm
         self.f = 0
@@ -115,7 +115,13 @@ class Node:
             x_offset = w/(2*math.cos(math.pi/6))
             y_offset = h/(2*math.cos(math.pi/6))
             small_x_offset = (w/2)*math.tan(math.pi/6)
-            pygame.draw.polygon(screen, color, ([self.x+x_offset, self.y], [self.x+small_x_offset, self.y-y_offset], [self.x-small_x_offset, self.y-y_offset], [self.x-x_offset, self.y], [self.x-small_x_offset, self.y+y_offset], [self.x+small_x_offset, self.y+y_offset]), lineWidth)
+            p1 = [self.x+x_offset, self.y]
+            p2 = [self.x+small_x_offset, self.y-y_offset]
+            p3 = [self.x-small_x_offset, self.y-y_offset]
+            p4 = [self.x-x_offset, self.y]
+            p5 = [self.x-small_x_offset, self.y+y_offset]
+            p6 = [self.x+small_x_offset, self.y+y_offset]
+            pygame.draw.polygon(screen, color, (p1, p2, p3, p4, p5, p6), lineWidth)
             pygame.display.update()
 
 # Initialize board
@@ -162,13 +168,13 @@ def main():
         current = open[lowestIndex]
         if current == end:
             print('done', current.f)
-            #start.draw(START_FINISH, 0)
+            start.draw(START_FINISH, 0)
             temp = current.f
             for i in range(round(current.f)):
                 current.closed = False
                 current.draw(IN_OPT,0)
                 current = current.previous
-            #end.draw(START_FINISH, 0)
+            end.draw(START_FINISH, 0)
             
             Tk().wm_withdraw()
             result = messagebox.askokcancel('Goal Found!', ('The solution was found.\nThe total distance travelled was ' + str(temp) + '\nRun the program again?'))
